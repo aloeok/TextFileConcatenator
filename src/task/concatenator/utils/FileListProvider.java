@@ -15,24 +15,34 @@ import java.util.List;
  * class to create sorted list of files tht are in provided directory
  */
 public class FileListProvider extends SimpleFileVisitor<Path> {
-	private List<ComparablePathWrapper> pathList;
+	private List<ComparablePathWrapper> wrappedPathList;
+	private List<Path> pathList;
 	
 	/** TESTED */
 	public FileListProvider (Path rootDir) throws IOException {
-		pathList = new ArrayList<>();
+		wrappedPathList = new ArrayList<>();
 		Files.walkFileTree(rootDir, this);
-		Collections.sort(pathList);
+		Collections.sort(wrappedPathList);
+		pathList = makeRawList();
 	}
 	
 	@Override
 	public FileVisitResult visitFile (Path file, BasicFileAttributes attr) {
 		if (attr.isRegularFile()) {
-			pathList.add(new ComparablePathWrapper(file.toAbsolutePath(), file.getFileName().toString()));
+			wrappedPathList.add(new ComparablePathWrapper(file.toAbsolutePath(), file.getFileName().toString()));
 		}
 		return FileVisitResult.CONTINUE;
 	}
 	
-	public List<ComparablePathWrapper> getPathList () {
+	private List<Path> makeRawList () {
+		List<Path> paths = new ArrayList<>();
+		for (ComparablePathWrapper wp : wrappedPathList) {
+			paths.add(wp.getPath());
+		}
+		return paths;
+	}
+	
+	public List<Path> getPathList () {
 		return pathList;
 	}
 }

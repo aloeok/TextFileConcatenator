@@ -1,19 +1,31 @@
 package task.concatenator.test;
 
-import task.concatenator.utils.ComparablePathWrapper;
-import task.concatenator.utils.FileListProvider;
-import task.concatenator.utils.RootDirProvider;
-import task.concatenator.utils.SimpleUserInterface;
+import task.concatenator.TextFileConcatenator;
+import task.concatenator.utils.*;
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
 public class Tester {
 	public static void main (String[] args) {
+		tfcTest();
+		//fcuTest();
 		//rdpTest();
-		flpTest();
+		//flpTest();
+	}
+	
+	public static void tfcTest () {
+		TextFileConcatenator tfc = new TextFileConcatenator(null);
+		tfc.work();
+	}
+	
+	public static void fcuTest () {
+		Path rootPath = FileSystems.getDefault().getPath("somesht/jjjd");
+		FileConcatenatorUtil fcu = new FileConcatenatorUtil(rootPath, "anothersht");
+		System.out.println(fcu.getConcatFilePath());
 	}
 	
 	public static void flpTest () {
@@ -32,11 +44,8 @@ public class Tester {
 			System.exit(1);
 		}
 		
-		List<ComparablePathWrapper> paths = flp.getPathList();
-		Collections.sort(paths);
-		
-		for (ComparablePathWrapper p : paths) {
-			simpleUI.message(p.getFileName());
+		for (Path p : flp.getPathList()) {
+			simpleUI.message(p.toString());
 		}
 	}
 	

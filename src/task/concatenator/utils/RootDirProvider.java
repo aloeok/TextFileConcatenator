@@ -16,7 +16,7 @@ public class RootDirProvider {
 	public Path getPath (String pathStr) {
 		Path rootDirPath = FileSystems.getDefault().getPath(pathStr);
 		if (Files.exists(rootDirPath)) {
-			return rootDirPath;
+			return rootDirPath.toAbsolutePath();
 		}
 		return null;
 	}
