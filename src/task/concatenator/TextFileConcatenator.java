@@ -1,6 +1,9 @@
 package task.concatenator;
 
+import java.io.IOException;
 import java.nio.file.Path;
+
+import task.concatenator.utils.FileListProvider;
 import task.concatenator.utils.RootDirProvider;
 import task.concatenator.utils.SimpleUserInterface;
 
@@ -9,13 +12,12 @@ public class TextFileConcatenator {
 	
 	private final SimpleUserInterface simpleUI;
 	private final String rootDirStr;
-	
-	private final RootDirProvider rootDirProvider;
+	FileSortOption sortOpt;
 	
 	public TextFileConcatenator (String rootDirArg, FileSortOption sortOpt) {
 		simpleUI = new SimpleUserInterface();
-		rootDirProvider = new RootDirProvider();
 		rootDirStr = getRootDirStr(rootDirArg);
+		this.sortOpt = sortOpt;
 	}
 	
 	private String getRootDirStr (String rootDirArg) {
@@ -26,7 +28,15 @@ public class TextFileConcatenator {
 	}
 	
 	public void work () {
-		Path rootDir = rootDirProvider.getPath(rootDirStr);
+		RootDirProvider rootDirProvider = new RootDirProvider();
+		Path rootDir = rootDirProvider.getPath(rootDirStr);				// EXCEPTION - MIGHT BE NULL
+		
+		try {															// BADLY HANDLED EXCEPTION
+			FileListProvider fileListProvider = new FileListProvider(rootDir);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 		
 	}
 }

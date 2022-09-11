@@ -5,8 +5,8 @@ import task.concatenator.TextFileConcatenator;
 public class TextFileConcatenatorRunner {
 	public static void main (String[] args) throws Exception {
 		TextFileConcatenator textFileConcatenator;
-		String rootDirArg;
-		TextFileConcatenator.FileSortOption option;
+		String rootDirArg = null;
+		TextFileConcatenator.FileSortOption option = null;
 		
 		if (args.length == 0) {
 			rootDirArg = null;
@@ -15,7 +15,8 @@ public class TextFileConcatenatorRunner {
 			rootDirArg = args[0];
 			option = TextFileConcatenator.FileSortOption.LEXICOGRAPHICAL_SORT;
 		} else {
-			throw new Exception("Invalid number of arguments");
+			System.out.println("Invalid number of arguments, see usage");
+			System.exit(0);
 		}
 		
 		textFileConcatenator = new TextFileConcatenator(rootDirArg, option);

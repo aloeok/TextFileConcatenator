@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/** DONE, TESTED */
 public class SimpleUserInterface {
 	private final BufferedReader in;
 	
@@ -11,12 +12,12 @@ public class SimpleUserInterface {
 		in = new BufferedReader(new InputStreamReader(System.in));
 	}
 	
-	//NOT TESTED
+	/** TESTED */
 	public void message (String messageStr) {
 		System.out.println(messageStr);
 	}
 	
-	//NOT TESTED
+	/** TESTED */
 	public String prompt (String promptStr) {
 		message(promptStr);
 		try {
