@@ -1,25 +1,22 @@
 package task.concatenator.test;
 
 import task.concatenator.TextFileConcatenator;
-import task.concatenator.utils.*;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.List;
 
 public class Tester {
 	public static void main (String[] args) {
-		tfcTest();
+		//tfcTest();
 		//fcuTest();
 		//rdpTest();
 		//flpTest();
 	}
-	
+	/*
 	public static void tfcTest () {
-		TextFileConcatenator tfc = new TextFileConcatenator(null);
-		tfc.work();
+		//TextFileConcatenator tfc = new TextFileConcatenator();
+		//tfc.work();
 	}
 	
 	public static void fcuTest () {
@@ -30,12 +27,12 @@ public class Tester {
 	
 	public static void flpTest () {
 		SimpleUserInterface simpleUI = new SimpleUserInterface();
-		RootDirProvider rdp = new RootDirProvider();
+		DirProvider rdp = new DirProvider();
 		FileListProvider flp = null;
 		String pathStr;
 		
 		pathStr = simpleUI.prompt("path: ");
-		Path path = rdp.getPath(pathStr);
+		Path path = rdp.getDirPath(pathStr);
 		
 		try {
 			flp = new FileListProvider(path);
@@ -51,12 +48,12 @@ public class Tester {
 	
 	public static void rdpTest () {
 		SimpleUserInterface simpleUI = new SimpleUserInterface();
-		RootDirProvider rdp = new RootDirProvider();
+		DirProvider rdp = new DirProvider();
 		String pathStr;
 		
 		while (true) {
 			pathStr = simpleUI.prompt("path: ");
-			Path path = rdp.getPath(pathStr);
+			Path path = rdp.getDirPath(pathStr);
 			if (path == null) {
 				simpleUI.message("Path \"" + pathStr + "\" does not exist\n");
 			} else {
@@ -64,4 +61,6 @@ public class Tester {
 			}
 		}
 	}
+	
+	 */
 }

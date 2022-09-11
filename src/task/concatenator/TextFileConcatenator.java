@@ -1,56 +1,54 @@
 package task.concatenator;
 
-import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
-import task.concatenator.utils.FileConcatenatorUtil;
-import task.concatenator.utils.FileListProvider;
-import task.concatenator.utils.RootDirProvider;
-import task.concatenator.utils.SimpleUserInterface;
+import task.concatenator.UI.SimpleUserInterface;
+import task.concatenator.provider.DirProvider;
+import task.concatenator.provider.FileListProvider;
+import task.concatenator.provider.ConcatenationProvider;
+import task.concatenator.provider.AlgorithmProvider;
 
 public class TextFileConcatenator {
-	public enum FileSortOption {LEXICOGRAPHICAL_SORT, DEPENDENCY_AWARE_SORT}
+	private static final String DEFAULT_CONCAT_FILE_NAME = "concat_result.txt";
+	public enum FileSortOption {LEX, DEP}
 	
-	private final SimpleUserInterface simpleUI;
 	private final String rootDirStr;
 	private final FileSortOption sortOpt;
 	
-	public TextFileConcatenator (String rootDirArg) {
-		this(rootDirArg, FileSortOption.LEXICOGRAPHICAL_SORT);
-	}
+	private final DirProvider dirProvider;
+	private final FileListProvider fileListProvider;
+	private final ConcatenationProvider concatenationProvider;
+	private final AlgorithmProvider algoProvider;
 	
-	public TextFileConcatenator (String rootDirArg, FileSortOption sortOpt) {
-		simpleUI = new SimpleUserInterface();
-		rootDirStr = getRootDirStr(rootDirArg);
+	public TextFileConcatenator (String rootDirStr, FileSortOption sortOpt) {
+		this.rootDirStr = rootDirStr;
 		this.sortOpt = sortOpt;
-	}
-	
-	private String getRootDirStr (String rootDirArg) {
-		if (rootDirArg == null) {
-			return simpleUI.prompt("Enter the path to your directory:");
-		}
-		return rootDirArg;
+		
+		dirProvider = new DirProvider();
+		fileListProvider = new FileListProvider();
+		concatenationProvider = new ConcatenationProvider();
+		algoProvider = new AlgorithmProvider();
 	}
 	
 	public void work () {
-		RootDirProvider rootDirProvider = new RootDirProvider();
-		Path rootDir = rootDirProvider.getPath(rootDirStr);				// EXCEPTION - MIGHT BE NULL
+		Path rootDir = dirProvider.getDirPath(rootDirStr);
 		
-		FileListProvider fileListProvider = null;
-		try {															// BADLY HANDLED EXCEPTION
-			fileListProvider = new FileListProvider(rootDir);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
+		fileListProvider.loadFileList(rootDir);
+		List<Path> rawFileList = fileListProvider.getPathList();
+		
+		List<Path> fileList = null;
+		if (sortOpt == FileSortOption.LEX) {
+			fileList = algoProvider.sortLexFilenames(rawFileList);
+		} else if (sortOpt == FileSortOption.DEP) {
+			fileList = algoProvider.sortDepAware(rawFileList);
+		} else {
+			SimpleUserInterface.handleException("Incorrect FileSortOption");
 		}
 		
-		FileConcatenatorUtil fileConcatenatorUtil = new FileConcatenatorUtil(rootDir);
+		concatenationProvider.init(rootDir, DEFAULT_CONCAT_FILE_NAME);
+		concatenationProvider.concatenateFileListIntoFile(fileList);
 		
-		try {
-			fileConcatenatorUtil.concatenateFileList(fileListProvider.getPathList());
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		SimpleUserInterface.message("Done.");
 	}
 }
