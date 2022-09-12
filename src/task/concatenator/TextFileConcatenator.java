@@ -54,7 +54,7 @@ public class TextFileConcatenator {
 	
 	/**
 	 * Функция получает на вход строковое представление директории с целевыми файлами
-	 * Функция возвращает объект класса java.nio.Path, представляющий директорию с целевыми файлами
+	 * Функция возвращает объект класса java.nio.Path, представляющий существующую директорию с целевыми файлами
 	 */
 	private Path getDirPath (String dirPathStr) {
 		Path rootDirPath = FileSystems.getDefault().getPath(dirPathStr);
@@ -103,6 +103,7 @@ public class TextFileConcatenator {
 	 * Функция получает на вход несуществующий путь к файлу и список директорий файлов
 	 * Функция ничего не возвращает; по указанному пути функция создаёт новый файл, который является результатом
 	 * склеивания всех файлов из списка в том же порядке, в котором они представлены в списке
+	 * Если файл по пути concatFilePathStr уже существует, программа завершается с ошибкой!
 	 */
 	private void concatenateFileListIntoFile (String concatFilePathStr, List<Path> files) {
 		Path concatFilePath = FileSystems.getDefault().getPath(concatFilePathStr);
