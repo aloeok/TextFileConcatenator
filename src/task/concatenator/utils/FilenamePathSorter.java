@@ -1,4 +1,6 @@
-package task.concatenator.provider.utils;
+package task.concatenator.utils;
+
+import task.concatenator.utils.wrap.PathCompFilenameWrap;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

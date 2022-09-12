@@ -1,7 +1,8 @@
-package task.concatenator.provider.utils;
+package task.concatenator.utils;
 
 import task.concatenator.UI.SimpleUserInterface;
-import task.concatenator.provider.utils.algo.PDLWrapGraph;
+import task.concatenator.utils.algo.PDLWrapGraph;
+import task.concatenator.utils.wrap.PathDepListWrap;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

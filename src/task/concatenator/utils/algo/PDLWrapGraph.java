@@ -1,6 +1,6 @@
-package task.concatenator.provider.utils.algo;
+package task.concatenator.utils.algo;
 
-import task.concatenator.provider.utils.PathDepListWrap;
+import task.concatenator.utils.wrap.PathDepListWrap;
 
 import java.nio.file.Path;
 import java.util.*;

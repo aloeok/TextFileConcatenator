@@ -1,14 +1,15 @@
 package task.concatenator;
 
 import task.concatenator.UI.SimpleUserInterface;
-import task.concatenator.provider.utils.PathSorter;
+import task.concatenator.utils.PathSorter;
 
 public class TextFileConcatenatorRunner {
 	public static void main (String[] args) throws Exception {
 		String rootDirStr = getRootDirStr(args);
+		String concatFilePathStr = getConcatFilePathStr(args);
 		PathSorter.PathSortOption option = getSortOption(args);
 		
-		TextFileConcatenator textFileConcatenator = new TextFileConcatenator(rootDirStr, option);
+		TextFileConcatenator textFileConcatenator = new TextFileConcatenator(rootDirStr, concatFilePathStr, option);
 		textFileConcatenator.work();
 		
 		SimpleUserInterface.message("Done.");
@@ -17,8 +18,18 @@ public class TextFileConcatenatorRunner {
 	private static String getRootDirStr (String[] args) {
 		if (args.length == 0) {
 			return SimpleUserInterface.prompt("Enter your directory:");
-		} else if (args.length == 2) {
+		} else if (args.length == 3) {
 			return args[0];
+		} else {
+			SimpleUserInterface.handleInvalidUsage();
+		}
+		return null;
+	}
+	private static String getConcatFilePathStr (String[] args) {
+		if (args.length == 0) {
+			return SimpleUserInterface.prompt("Enter full path for the future output file:");
+		} else if (args.length == 3) {
+			return args[1];
 		} else {
 			SimpleUserInterface.handleInvalidUsage();
 		}
@@ -30,7 +41,7 @@ public class TextFileConcatenatorRunner {
 		if (args.length == 0) {
 			optionStr = SimpleUserInterface.prompt("Enter sort option (\"1\" for lex. or \"2\" for dep.-aware)");
 		} else if (args.length == 2) {
-			optionStr = args[1];
+			optionStr = args[2];
 		} else {
 			SimpleUserInterface.handleInvalidUsage();
 			return null;

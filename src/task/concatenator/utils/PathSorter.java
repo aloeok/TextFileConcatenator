@@ -1,4 +1,4 @@
-package task.concatenator.provider.utils;
+package task.concatenator.utils;
 
 import task.concatenator.UI.SimpleUserInterface;
 

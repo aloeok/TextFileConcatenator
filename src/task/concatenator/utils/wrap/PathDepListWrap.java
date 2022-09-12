@@ -1,7 +1,6 @@
-package task.concatenator.provider.utils;
+package task.concatenator.utils.wrap;
 
 import task.concatenator.UI.SimpleUserInterface;
-import task.concatenator.provider.DirProvider;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -9,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -22,12 +20,9 @@ public class PathDepListWrap {
 	private final Path path;
 	private final List<Path> dependencies;
 	
-	private final DirProvider dirProvider;
-	
 	public PathDepListWrap (Path path, Path rootDir) {
 		this.path = path;
 		dependencies = new ArrayList<>();
-		dirProvider = new DirProvider();
 		buildDependencies(rootDir);
 	}
 	
@@ -61,7 +56,7 @@ public class PathDepListWrap {
 	private Path extractDependency (String depLine, Path rootDir) {
 		String dependencyStr = depLine.substring(depLine.indexOf("'") + 1, depLine.lastIndexOf("'"));
 		String dependencyPathStr = FileSystems.getDefault().getPath(rootDir.toString() + FileSystems.getDefault().getSeparator() + dependencyStr).normalize().toString();
-		return dirProvider.getDirPath(dependencyPathStr);
+		return FileSystems.getDefault().getPath(dependencyPathStr);
 	}
 	
 	public Path getPath () {
