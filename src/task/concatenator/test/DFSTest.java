@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/**
+ * Класс для тестирования топологической сортировки и поиска цикла
+ */
 public class DFSTest {
 	public static int[][] readGraph () throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

@@ -1,13 +1,19 @@
 package task.concatenator.test;
 
 import task.concatenator.TextFileConcatenator;
+import task.concatenator.TextFileConcatenatorRunner;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+/**
+ * Класс для тестирования отдельных функций
+ */
 public class Tester {
 	public static void main (String[] args) {
+		String[] arr = {"/users/aloeo/desktop/ConcatTestDir", "/users/aloeo/desktop/concatRES.txt", "2"};
+		TextFileConcatenatorRunner.main(arr);
 		//tfcTest();
 		//fcuTest();
 		//rdpTest();
