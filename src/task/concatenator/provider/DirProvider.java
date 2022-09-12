@@ -20,7 +20,7 @@ public class DirProvider {
 		if (Files.exists(rootDirPath)) {
 			return rootDirPath.toAbsolutePath();
 		} else {
-			SimpleUserInterface.handleException("Directory not found");
+			SimpleUserInterface.handleException("Directory not found: " + rootDirPath);
 			return null;
 		}
 	}

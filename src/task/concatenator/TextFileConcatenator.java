@@ -3,25 +3,24 @@ package task.concatenator;
 import java.nio.file.Path;
 import java.util.List;
 
-import task.concatenator.UI.SimpleUserInterface;
 import task.concatenator.provider.DirProvider;
 import task.concatenator.provider.FileListProvider;
 import task.concatenator.provider.ConcatenationProvider;
 import task.concatenator.provider.AlgorithmProvider;
+import task.concatenator.provider.utils.PathSorter;
 
 public class TextFileConcatenator {
 	private static final String DEFAULT_CONCAT_FILE_NAME = "concat_result.txt";
-	public enum FileSortOption {LEX, DEP}
 	
 	private final String rootDirStr;
-	private final FileSortOption sortOpt;
+	private final PathSorter.PathSortOption sortOpt;
 	
 	private final DirProvider dirProvider;
 	private final FileListProvider fileListProvider;
 	private final ConcatenationProvider concatenationProvider;
 	private final AlgorithmProvider algoProvider;
 	
-	public TextFileConcatenator (String rootDirStr, FileSortOption sortOpt) {
+	public TextFileConcatenator (String rootDirStr, PathSorter.PathSortOption sortOpt) {
 		this.rootDirStr = rootDirStr;
 		this.sortOpt = sortOpt;
 		
@@ -37,18 +36,9 @@ public class TextFileConcatenator {
 		fileListProvider.loadFileList(rootDir);
 		List<Path> rawFileList = fileListProvider.getPathList();
 		
-		List<Path> fileList = null;
-		if (sortOpt == FileSortOption.LEX) {
-			fileList = algoProvider.sortLexFilenames(rawFileList);
-		} else if (sortOpt == FileSortOption.DEP) {
-			fileList = algoProvider.sortDepAware(rawFileList);
-		} else {
-			SimpleUserInterface.handleException("Incorrect FileSortOption");
-		}
+		List<Path> fileList = algoProvider.sortPaths(sortOpt, rawFileList, rootDir);
 		
 		concatenationProvider.init(rootDir, DEFAULT_CONCAT_FILE_NAME);
 		concatenationProvider.concatenateFileListIntoFile(fileList);
-		
-		SimpleUserInterface.message("Done.");
 	}
 }

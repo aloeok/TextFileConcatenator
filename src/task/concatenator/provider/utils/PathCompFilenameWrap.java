@@ -2,11 +2,11 @@ package task.concatenator.provider.utils;
 
 import java.nio.file.Path;
 
-public class PathCompFilename implements Comparable<PathCompFilename> {
+public class PathCompFilenameWrap implements Comparable<PathCompFilenameWrap> {
 	private final Path path;
 	private final String fileName;
 	
-	public PathCompFilename (Path path) {
+	public PathCompFilenameWrap(Path path) {
 		this.path = path;
 		this.fileName = path.getFileName().toString();
 	}
@@ -15,7 +15,7 @@ public class PathCompFilename implements Comparable<PathCompFilename> {
 		return path;
 	}
 	
-	public int compareTo (PathCompFilename o) {
+	public int compareTo (PathCompFilenameWrap o) {
 		return fileName.compareTo(o.fileName);
 	}
 }

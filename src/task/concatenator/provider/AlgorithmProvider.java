@@ -1,24 +1,14 @@
 package task.concatenator.provider;
 
-import com.sun.istack.internal.NotNull;
-import task.concatenator.provider.utils.FilenameSorter;
+import task.concatenator.provider.utils.PathSorter;
 
 import java.nio.file.Path;
 import java.util.List;
 
 public class AlgorithmProvider {
-	private final FilenameSorter filenameSorter;
-	
-	public AlgorithmProvider () {
-		filenameSorter = new FilenameSorter();
-	}
-	
-	public List<Path> sortLexFilenames (@NotNull List<Path> rawFileList) {
-		filenameSorter.build(rawFileList);
-		return filenameSorter.getSortedPathList();
-	}
-	
-	public List<Path> sortDepAware (@NotNull List<Path> rawFileList) {
-		return null;
+	public List<Path> sortPaths (PathSorter.PathSortOption option, List<Path> rawFileList, Path rootDir) {
+		PathSorter pathSorter = PathSorter.getPathSorter(option);
+		pathSorter.build(rawFileList, rootDir);
+		return pathSorter.getSortedPathList();
 	}
 }
