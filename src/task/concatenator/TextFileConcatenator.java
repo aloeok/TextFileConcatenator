@@ -105,6 +105,9 @@ public class TextFileConcatenator {
 	 * склеивания всех файлов из списка в том же порядке, в котором они представлены в списке
 	 * Если файл по пути concatFilePathStr уже существует, программа завершается с ошибкой!
 	 */
+	/*
+	При проверке на собственном компьютере скорость конкатенации составляла ~500 МБайт/с
+	 */
 	private void concatenateFileListIntoFile (String concatFilePathStr, List<Path> files) {
 		Path concatFilePath = FileSystems.getDefault().getPath(concatFilePathStr);
 		try {
